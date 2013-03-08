@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}{% endblock %} - Remarks</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        {% block styles %}{% endblock %}
+    </head>
+    <body style="padding-top: 60px;">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">Remark Slides</a>
+                    <span class="navbar-text">Write slides with <a href="http://wowubuntu.com/markdown/">markdown</a> and <a href="https://github.com/gnab/remark">remark</a> on <a href="https://gist.github.com">gist</a></span> 
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>        
+
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="well">
+    <h2>Enter a gist to go!</h2>
+
+    <form class="form-inline" action="{{ url_for('preview') }}">
+        <div class="input-append">
+            <input class="span10" type="text" name="source" placeholder="https://gist.github.com/xxxx/xxxxxxx">
+            <button class="btn" type="submit">Create!</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
