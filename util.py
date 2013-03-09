@@ -9,27 +9,34 @@
 from log import log
 import re, json, urllib2, urlparse
 
-def get_gist(url):
-    """ Get gist info from given url.
+
+def get_gist_by_id(gist_id):
+    """ Get gist info by given gist id
     If the gist is valid, return the gist info dict from json using api http://developer.github.com/v3/gists/
     If the given url is not a valid gist, return None"""
 
-    gist_id  = urlparse.urlsplit(url).geturl().split('/')[-1]
     gist_api = 'https://api.github.com/gists/%s' % gist_id  
     
-    log.info('* Fetching gist info from: %s' % gist_api)
+    log.info('Fetching gist info from: %s' % gist_api)
     try:
         resp = urllib2.urlopen(gist_api)
         if resp.getcode() == 200:
             return json.loads(resp.read())
-    except URLError as e:
-        log.error('Failed fetching gist: %s', url)
+    except urllib2.URLError as e:
         log.error(e)
 
-    log.warn('Invalid gist.')
+    log.warn('Invalid gist %s', gist_id)
     return None
 
-def get_slides_source(url):
+
+def get_gist_by_url(url):
+    """ Get gist info from given url. """
+
+    gist_id  = urlparse.urlsplit(url).geturl().split('/')[-1]
+    return find_gist_by_id(gist_id)
+
+
+def get_slides_source_from_gist(gist):
     """ Get remark style slides's markdown source
 
     First, remarks will search for file ``slides.md`` and return its content
@@ -40,10 +47,7 @@ def get_slides_source(url):
    
     If no slides.md or slideN.md found, None will be return instead.
     """
-    gist = get_gist(url) 
-    if gist is None:
-        return None
-
+    
     log.info('Guessing slides.md source')
     slides_file = gist.get('files', {}).get('slides.md', None)
     if slides_file:
