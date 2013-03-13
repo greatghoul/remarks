@@ -2,9 +2,10 @@
 from flask import Flask, abort, request, redirect, render_template, url_for
 from log import log
 import util
+import os
 
 app = Flask(__name__)
-app.config.from_pyfile('config.cfg', silent=True)
+app.config.from_pyfile(os.path.join(os.path.dirname(__file__), 'config.cfg'), silent=True)
 
 @app.route('/')
 def home():
