@@ -12,6 +12,10 @@
                 <div class="container">
                     <a class="brand" href="#">Remark Slides</a>
                     <span class="navbar-text">Write <a href="https://github.com/gnab/remark">remark style</a> slides with <a href="http://wowubuntu.com/markdown/">markdown</a> on <a href="https://gist.github.com">gist</a>, and play slideshow online. </span> 
+                    
+                    <form class="navbar-form pull-right">
+                        <a href="javascript:(function(){var gist_id=document.location.pathname.replace(/.*\//g,'');window.open('http://remarks.sinaapp.com/s/'+gist_id,'_blank','width=600,height=400');})()" class="btn btn-link" data-toggle="tooltip" data-placement="left" data-trigger="manual" title="Drag me into bookmark bar." data-original-title="Tooltip on bottom"></i>Slideshow</a>
+                    </form>
                 </div>
             </div>
         </div>
@@ -23,6 +27,11 @@
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('[data-toggle=tooltip]').tooltip('show');
+            });
+        </script>
         {% block scripts %}{% endblock %}
     </body>
 </html>
