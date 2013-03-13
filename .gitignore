@@ -1,5 +1,6 @@
 *.py[cod]
 *.wsgi[cod]
+*.cfg
 
 # C extensions
 *.so

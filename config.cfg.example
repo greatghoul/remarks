@@ -1,0 +1,5 @@
+# To enable google analytics, uncomment the folling line, and put your ga profile here. 
+# GA_PROFILE = 'UA-XXXXXXXX-X'
+
+# Debug is disabled by default.
+DEBUG = False
