@@ -4,7 +4,7 @@ from log import log
 import util
 
 app = Flask(__name__)
-# app.debug = True # Always enable debug mode
+app.config.from_pyfile('config.cfg', silent=True)
 
 @app.route('/')
 def home():
