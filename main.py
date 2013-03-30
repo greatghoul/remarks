@@ -3,15 +3,17 @@ from flask import Flask, abort, request, redirect, render_template, url_for
 from log import log
 import util
 import os
+from github import GitHub
 
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(os.path.dirname(__file__), 'config.cfg'), silent=True)
+gh = GitHub()
 
 @app.route('/')
 def home():
     log.info('Fetching demo gist.')
     gist_id = '5123482'
-    gist = util.get_gist_by_id(gist_id)
+    gist = gh.gists(gist_id).get()
     source = util.get_slides_source_from_gist(gist)
 
     return render_template('index.html', gist_id=gist_id, source=source)
@@ -27,7 +29,7 @@ def play_gist(gist_id=None):
             abort(404)
     else:
         log.info('Creating slides from gist: %s' % gist_id)
-        gist = util.get_gist_by_id(gist_id)
+        gist = gh.gists(gist_id).get()
         if gist is None:
             abort(404)
         
