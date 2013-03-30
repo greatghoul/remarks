@@ -3,7 +3,7 @@ from flask import Flask, abort, request, redirect, render_template, url_for
 from log import log
 import util
 import os
-from github import GitHub
+from github import GitHub, ApiError, ApiNotFoundError
 
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(os.path.dirname(__file__), 'config.cfg'), silent=True)
@@ -18,8 +18,8 @@ def home():
 
     return render_template('index.html', gist_id=gist_id, source=source)
 
-@app.route('/s/', methods=['GET'])
-@app.route('/s/<gist_id>/', methods=['GET'])
+@app.route('/gist/', methods=['GET'])
+@app.route('/gist/<gist_id>/', methods=['GET'])
 def play_gist(gist_id=None):
     # Fix url to a restful style.
     if gist_id is None:
@@ -36,4 +36,22 @@ def play_gist(gist_id=None):
         title = gist.get('description', 'Remarks')
         source = util.get_slides_source_from_gist(gist)
         return render_template('slideshow.html', title=title, source=source)
+
+@app.route('/repo/<owner>/<repo>/<path:path>/', methods=['GET'])
+def play_repo(owner, repo, path):
+    print owner, repo, path
+    try:
+        print '--------' 
+        content = gh.repos(owner)(repo).contents(path + 'slides.md').get()
+        print 'END: --------' 
+        print content
+    except ApiNotFoundError, e:
+        print e, e.request, e.response
+    except ApiError, e:
+        print e, e.request, e.response
+    except Exception, e:
+        print e
+    # log.info(content)
+
+    return ''
 
