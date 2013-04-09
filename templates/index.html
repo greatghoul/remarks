@@ -3,8 +3,8 @@
 
 {% block styles %}
 <style type="text/css">
-    .demo-box {
-        width: 100%; height: 300px; padding: 5px; 
+    .demo-box, .gist {
+        width: 100%; height: 300px;
         overflow: auto; border: 1px solid #ddd; 
         background-color: #f5f5f5; 
     }
@@ -13,35 +13,68 @@
 
 {% block content %}
 
-<div class="row demo">
-    <div class="span6">
-        <h3>Write markdown slides in gist </h3>
-        <pre class="demo-box">{{ source }}</pre>
-        <a href="https://gist.github.com/{{ gist_id }}" target="_blank" title="Folk me"><i class="icon-share"></i> Folk me on gist.</a>
+<section id="demo">
+    <div class="page-header">
+        <h1>Demo</h1>
     </div>
-    <div class="span6">
-        <h3>Play html slides online</h3>
-        <iframe src="{{ url_for('play_gist', gist_id=gist_id) }}" frameborder="0" class="demo-box"></iframe>
-        <a href="{{ url_for('play_gist', gist_id=gist_id) }}" target="_blank" title="Open in new wndow."><i class="icon-share"></i> Open in new window.</a>
+
+    <div class="row">
+        <div class="span6">
+            <h3>Write markdown slides in gist </h3>
+            <iframe src="{{ url_for('gist_file', gist_id='5123482', raw=1) }}" frameborder="0" class="demo-box"></iframe>
+            <a href="https://gist.github.com/greatghoul/5123482" target="_blank" title="Folk me"><i class="icon-share"></i> Folk me on gist.</a>
+        </div>
+        <div class="span6">
+            <h3>Play html slides online</h3>
+            <iframe src="{{ url_for('gist_file', gist_id='5123482') }}" frameborder="0" class="demo-box"></iframe>
+            <a href="{{ url_for('gist_file', gist_id='5123482') }}" target="_blank" title="Open in new wndow."><i class="icon-share"></i> Open in new window.</a>
+        </div>
     </div>
-</div>
+</section>
 
-<hr />
+<section id="intro">
+    <div class="page-header">
+        <h1>Intro</h1>
+    </div>
 
-<div class="row" style="text-align: center;">
-    <div class="span3"></div>
-    <form class="span6" action="{{ url_for('play_gist') }}">
-        <h3>Try it your self.</h3>
+    <h3>What is remark</h3>
 
-        <div class="input-prepend input-append">
-            <span class="add-on">https://gist.github.com/</span><input class="span2" name="gist_id" type="text" placeholder="GIST ID" />
+    <p><strong>Remark</strong> is a simple, in-browser, markdown-driven slideshow tool targeted at people who know their way around HTML and CSS, featuring:</p>
 
-        </div>
+    <ul>
+        <li>Markdown formatting, with smart extensions</li>
+        <li>Automatic syntax highlighting, with optional language hinting</li>
+        <li>Slide scaling, thus similar appearance on all devices / resolutions</li>
+        <li>Touch support for smart phones and pads, i.e. swipe to navigate slides</li>
+        <li>Check out this remark slideshow for a brief introduction.</li>
+    </ul>
 
-        <div>
-            <button type="submit" class="btn btn-large btn-primary">PLAY SLIDESHOW!</button>
-        </div>
-    </form>
-    <div class="span3"></div>
-</div>
+    <p>Check out <a href="http://gnab.github.com/remark">this remark slideshow</a> for a brief introduction.</p>
+    <p>Check out <a href="https://github.com/gnab/remark">https://github.com/gnab/remark</a> for more details</p>
+
+    <h3>What is remarks</h3>
+
+    <p><strong>Remarks</strong> is a web application that making and playing remark slides online, featuring:</p>
+
+    <ul>
+        <li>Play remark slides online from gist or github repositories</li>
+        <li>Bookmarklet to play slides easily</li>
+        <li>Bookmarklet to preview slides in a popup window (coming soon ...)</li>
+    </ul>
+
+</section>
+
+<section id="usage">
+    <div class="page-header">
+        <h1>Usage</h1>
+    </div>
+
+    <h3>Write slides in github gist</h3>
+
+    <i>Todo...</i>
+
+    <h3>Write slide in github repository</h3>
+    
+    <i>Todo...</i>
+</section>
 {% endblock %}

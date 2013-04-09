@@ -1,39 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-    util
-    ~~~~~~~~~~~~~~~~
+    Utilities to fetch content from github 
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
     A set of helper functions used for remarks.
 """
 
 from log import log
+from github import GitHub
 import re, json, urllib2, urlparse
 
-
-def get_gist_by_id(gist_id):
-    """ Get gist info by given gist id
-    If the gist is valid, return the gist info dict from json using api http://developer.github.com/v3/gists/
-    If the given url is not a valid gist, return None"""
-
-    gist_api = 'https://api.github.com/gists/%s' % gist_id  
-    
-    log.info('Fetching gist info from: %s' % gist_api)
-    try:
-        resp = urllib2.urlopen(gist_api)
-        if resp.getcode() == 200:
-            return json.loads(resp.read())
-    except urllib2.URLError as e:
-        log.error(e)
-
-    log.warn('Invalid gist %s', gist_id)
-    return None
-
+gh = GitHub()
 
 def get_gist_by_url(url):
     """ Get gist info from given url. """
 
     gist_id  = urlparse.urlsplit(url).geturl().split('/')[-1]
-    return find_gist_by_id(gist_id)
+    return gh.gists(gist_id).get()
 
 
 def get_slides_source_from_gist(gist):
