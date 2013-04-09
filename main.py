@@ -3,6 +3,8 @@ from flask import Flask, abort, request, redirect, render_template, url_for
 from log import log
 import util
 import os
+import re
+import base64
 from github import GitHub, ApiError, ApiNotFoundError
 
 app = Flask(__name__)
@@ -37,21 +39,37 @@ def play_gist(gist_id=None):
         source = util.get_slides_source_from_gist(gist)
         return render_template('slideshow.html', title=title, source=source)
 
-@app.route('/repo/<owner>/<repo>/<path:path>/', methods=['GET'])
-def play_repo(owner, repo, path):
-    print owner, repo, path
-    try:
-        print '--------' 
-        content = gh.repos(owner)(repo).contents(path + 'slides.md').get()
-        print 'END: --------' 
-        print content
-    except ApiNotFoundError, e:
-        print e, e.request, e.response
-    except ApiError, e:
-        print e, e.request, e.response
-    except Exception, e:
-        print e
-    # log.info(content)
+def _repo_slides(resp):
+    slides = dict(title=u'Remarks Slides')
+    content = base64.b64decode(resp.get('content', '')).decode('utf-8')
+    for line in re.sub(r'\s*^---.*$[\s\S]*', '', content, flags=re.M).split('\n'):
+        key, val = re.split(r':\s*', line, maxsplit=1)
+        slides[key] = val
+    slides['content'] = content
+    return slides
 
-    return ''
+def _repo_attach(owner, repo, branch, path, filename):
+    return 'https://raw.github.com/%s/%s/%s/%s/%s' % (owner, repo, 'master', path, filename)
+    
+@app.route('/repo/<owner>/<repo>/<path>/', methods=['GET'])
+@app.route('/repo/<owner>/<repo>/<path>/<path:filename>', methods=['GET'])
+def repo_file(owner, repo, path, filename='slides.md'):
+    try:
+        branch = request.args.get('branch', 'master')
+        log.info('%s/%s/%s/%s', owner, repo, path, filename)
+        if filename == 'slides.md':
+            resp = gh.repos(owner)(repo).contents(path + '/' + filename).get(ref=branch)
+            slides = _repo_slides(resp)
+            return render_template('slideshow.html', slides=slides)
+        else:
+            return redirect(_repo_attach(owner, repo, branch, path, filename))
+
+    except ApiNotFoundError, e:
+        log.error(e.response)
+    except ApiError, e:
+        log.error(e.response)
+    except Exception, e:
+        log.error(e)
+
+    return abort(404)
 
