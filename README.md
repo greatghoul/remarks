@@ -9,4 +9,7 @@ http://remarks.sinaapp.com/
 
 **GuruDigger:** http://gurudigger.com/ideas/590
 
+LICENCE
+-------
 
+**remarks** is under MIT license, read the `LICENSE` file.
