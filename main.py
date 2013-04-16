@@ -12,10 +12,8 @@ gh = GitHub()
 
 @app.route('/')
 def home():
-    log.info('Fetching demo gist.')
-    gist_id = '5123482'
-
-    return render_template('index.html', gist_id=gist_id)
+    bookmarklet = render_template('bookmarklet.js').replace('\n', '');  
+    return render_template('index.html', bookmarklet=bookmarklet)
 
 
 def _gist_slides(gist):
