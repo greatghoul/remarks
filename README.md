@@ -9,8 +9,9 @@ Check the slides [here](http://remarks.sinaapp.com/) for more details.
 
 DEMOS
 -------
-Gist Version: <http://remarks.sinaapp.com/s/5123482/>
-Repo Version: <http://remarks.sinaapp.com/repo/greatghoul/slides/google-oauth2-and-analytics-data-api/>
+
+ * Gist Version: <http://remarks.sinaapp.com/s/5123482/>
+ * Repo Version: <http://remarks.sinaapp.com/repo/greatghoul/slides/google-oauth2-and-analytics-data-api/>
 
 LICENCE
 -------
