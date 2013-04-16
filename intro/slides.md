@@ -34,4 +34,12 @@ Check out <https://github.com/gnab/remark> for more details.
  * Bookmarklet to play slides easily
  * Bookmarklet to preview slides in a popup window (coming soon ...)
 
+---
+# Remarks in gist
 
+![Remarks in gist](gist.png)
+
+---
+# Remarks in repo
+
+![Remarks in repo](repo.png)
