@@ -32,14 +32,57 @@ Check out <https://github.com/gnab/remark> for more details.
 
  * Play remark slides online from gist or github repositories
  * Bookmarklet to play slides easily
- * Bookmarklet to preview slides in a popup window (coming soon ...)
+ * Bookmarklet to preview slides in a popup window.
 
 ---
 # Remarks in gist
 
 ![Remarks in gist](gist.png)
 
+.footnote[[View sample][^1]]
+
+[^1]: https://gist.github.com/greatghoul/5123482
+
 ---
 # Remarks in repo
 
 ![Remarks in repo](repo.png)
+
+.footnote[[View sample][^1]]
+
+[^1]: https://github.com/greatghoul/slides/tree/master/google-oauth2-and-analytics-data-api
+
+---
+# Set slides title
+
+Remarks add some additional attributes in remark source:
+
+    title: Introduce Remarks
+    name: inverse
+    layout: true
+    class: inverse
+
+in the first fieldset, `title` means the TITLE for slides.
+
+---
+# Insert images host in github repo
+
+Images beside slides source in repo subfolders can be embedded easily.
+
+    /repo/path
+      /slides-folder
+        /slides.md
+        /picture1.png
+        /picture2.png
+
+`slides.md`
+
+    ![picture1](picture1.png)
+    ![picture2](picture2.png)
+---
+name: last-page
+template: inverse
+
+## That's all folks (for now)!
+
+Slideshow created using [remark](http://github.com/gnab/remark) and [remarks](http://remarks.sinaapp.com)
