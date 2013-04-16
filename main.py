@@ -4,6 +4,7 @@ from log import log
 import os
 import re
 import base64
+import urlparse
 from github import GitHub, ApiError, ApiNotFoundError
 
 app = Flask(__name__)
@@ -12,10 +13,8 @@ gh = GitHub()
 
 @app.route('/')
 def home():
-    log.info('Fetching demo gist.')
-    gist_id = '5123482'
-
-    return render_template('index.html', gist_id=gist_id)
+    bookmarklet = render_template('bookmarklet.js').replace('\n', '');  
+    return render_template('index.html', bookmarklet=bookmarklet)
 
 
 def _gist_slides(gist):
@@ -64,21 +63,30 @@ def _repo_slides(repo):
     return slides
 
 def _repo_attach(owner, repo, branch, path, filename):
-    return 'https://raw.github.com/%s/%s/%s/%s/%s' % (owner, repo, 'master', path, filename)
+    return 'https://raw.github.com/%s/%s/%s/%s/%s' % (owner, repo, branch, path, filename)
     
 @app.route('/repo/<owner>/<repo>/<path>/', methods=['GET'])
 @app.route('/repo/<owner>/<repo>/<path>/<path:filename>', methods=['GET'])
 def repo_file(owner, repo, path, filename='slides.md'):
     try:
-        branch = request.args.get('branch', 'master')
-        log.info('%s/%s/%s/%s', owner, repo, path, filename)
-        repo = gh.repos(owner)(repo).contents(path + '/' + filename).get(ref=branch)
+        repo_resp = gh.repos(owner)(repo).contents(path + '/' + filename)
+
         if 'raw' not in request.args and filename == 'slides.md':
-            slides = _repo_slides(repo)
+            branch = request.args.get('branch', 'master')
+            log.info('Fetching slides(%s): /%s/%s/%s/%s', branch, owner, repo, path, filename)
+            repo_resp = repo_resp.get(ref=branch)
+            slides = _repo_slides(repo_resp)
             return render_template('slideshow.html', slides=slides)
         else:
+            # Fix branch in attachments
+            query = urlparse.urlparse(request.referrer).query
+            branch = urlparse.parse_qs(query).get('branch', ['master'])[0]
+
+            log.info('Fetching attach(%s): /%s/%s/%s/%s', branch, owner, repo, path, filename)
+            log.info('  Referrer: %s', request.referrer)
+            repo_resp = repo_resp.get(ref=branch)
             if request.args.get('raw') == '1':
-                return base64.b64decode(repo.get('content', '')).decode('utf-8')
+                return base64.b64decode(repo_resp.get('content', '')).decode('utf-8')
             else:
                 return redirect(_repo_attach(owner, repo, branch, path, filename))
 
