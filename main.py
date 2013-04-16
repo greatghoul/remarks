@@ -4,6 +4,7 @@ from log import log
 import os
 import re
 import base64
+import urlparse
 from github import GitHub, ApiError, ApiNotFoundError
 
 app = Flask(__name__)
@@ -75,6 +76,10 @@ def repo_file(owner, repo, path, filename='slides.md'):
             slides = _repo_slides(repo)
             return render_template('slideshow.html', slides=slides)
         else:
+            # Fix branch in attachments
+            query = urlparse.urlparse(request.referrer)
+            branch = urlparse.parse_qs(query).get('branch', ['master'])[0]
+
             if request.args.get('raw') == '1':
                 return base64.b64decode(repo.get('content', '')).decode('utf-8')
             else:
