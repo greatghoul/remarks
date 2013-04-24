@@ -3,3 +3,6 @@
 
 # Debug is disabled by default.
 DEBUG = False
+
+CLIENT_ID = 'your github client_id'
+CLIENT_SECRET = 'your github client_secret'

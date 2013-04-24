@@ -1,5 +1,6 @@
 # coding: utf-8
-from flask import Flask, abort, request, redirect, render_template, url_for
+from flask import Flask, abort, request, redirect, render_template, \
+                  url_for, send_from_directory, Response
 from log import log
 import os
 import re
@@ -7,9 +8,10 @@ import base64
 import urlparse
 from github import GitHub, ApiError, ApiNotFoundError
 
-app = Flask(__name__)
-app.config.from_pyfile(os.path.join(os.path.dirname(__file__), 'config.cfg'), silent=True)
-gh = GitHub()
+instance_path = os.path.dirname(__file__)
+app = Flask(__name__, instance_path=instance_path)
+app.config.from_pyfile(os.path.join(instance_path, 'config.cfg'), silent=True)
+gh = GitHub(client_id=app.config['CLIENT_ID'], client_secret=app.config['CLIENT_SECRET'])
 
 @app.route('/')
 def home():
@@ -17,8 +19,15 @@ def home():
     return render_template('index.html', bookmarklet=bookmarklet)
 
 
+@app.route('/theme/<name>/<path:filename>')
+def theme(name, filename):
+    theme_dir = os.path.join(app.instance_path, 'themes', name)
+    log.info('Theme file: %s/%s', theme_dir, filename)
+    return send_from_directory(theme_dir, filename)
+
+
 def _gist_slides(gist):
-    slides = dict(title=u'Remarks Slides')
+    slides = dict(title=u'Remarks Slides', theme=url_for('theme', name='default', filename='style.css'))
     content = gist.get('files', {}).get('slides.md', {}).get('content', '')
     for line in re.sub(r'\s*^---.*$[\s\S]*', '', content, flags=re.M).split('\n'):
         key, val = re.split(r':\s*', line, maxsplit=1)
@@ -36,8 +45,13 @@ def gist_file(gist_id, filename='slides.md'):
             slides = _gist_slides(gist)
             return render_template('slideshow.html', slides=slides)
         else:
-            if request.args.get('raw') == '1':
-                return '<pre>' + gist.get('files', {}).get('slides.md', {}).get('content', '') + '</pre>'
+            is_style = filename.lower().endswith('.css')
+            if request.args.get('raw') == '1' or is_style:
+                raw_content = gist.get('files', {}).get('slides.md', {}).get('content', '')
+                if is_style:
+                    return Response(raw_content, mimetype='text/css')
+                else:
+                    return raw_content
             else:
                 raw_url = gist.get('files', {}).get(filename, {}).get('raw_url')
                 log.info('  Raw url: %s', raw_url)
@@ -54,7 +68,7 @@ def gist_file(gist_id, filename='slides.md'):
 
 
 def _repo_slides(repo):
-    slides = dict(title=u'Remarks Slides')
+    slides = dict(title=u'Remarks Slides', theme=url_for('theme', name='default', filename='style.css'))
     content = base64.b64decode(repo.get('content', '')).decode('utf-8')
     for line in re.sub(r'\s*^---.*$[\s\S]*', '', content, flags=re.M).split('\n'):
         key, val = re.split(r':\s*', line, maxsplit=1)
@@ -85,8 +99,13 @@ def repo_file(owner, repo, path, filename='slides.md'):
             log.info('Fetching attach(%s): /%s/%s/%s/%s', branch, owner, repo, path, filename)
             log.info('  Referrer: %s', request.referrer)
             repo_resp = repo_resp.get(ref=branch)
-            if request.args.get('raw') == '1':
-                return base64.b64decode(repo_resp.get('content', '')).decode('utf-8')
+            is_style = filename.lower().endswith('.css')
+            if request.args.get('raw') == '1' or is_style:
+                raw_content = base64.b64decode(repo_resp.get('content', '')).decode('utf-8')
+                if is_style:
+                    return Response(raw_content, mimetype='text/css')
+                else:
+                    return raw_content
             else:
                 return redirect(_repo_attach(owner, repo, branch, path, filename))
 
