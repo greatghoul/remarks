@@ -9,7 +9,7 @@ import urlparse
 from github import GitHub, ApiError, ApiNotFoundError
 
 instance_path = os.path.dirname(__file__)
-app = Flask(__name__, instance_path=instance_path)
+app = Flask(__name__)
 app.config.from_pyfile(os.path.join(instance_path, 'config.cfg'), silent=True)
 gh = GitHub(client_id=app.config['CLIENT_ID'], client_secret=app.config['CLIENT_SECRET'])
 
@@ -21,7 +21,7 @@ def home():
 
 @app.route('/theme/<name>/<path:filename>')
 def theme(name, filename):
-    theme_dir = os.path.join(app.instance_path, 'themes', name)
+    theme_dir = os.path.join(instance_path, 'themes', name)
     log.info('Theme file: %s/%s', theme_dir, filename)
     return send_from_directory(theme_dir, filename)
 
