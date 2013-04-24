@@ -87,6 +87,7 @@ Or, use a common theme in other directory.
 
 Theme filename must be end with `.css`
 
+---
 # Insert images host in github repo
 
 Images beside slides source in repo subfolders can be embedded easily.
