@@ -13,6 +13,18 @@ DEMOS
  * Gist Version: <http://remarks.sinaapp.com/gist/5123482/>
  * Repo Version: <http://remarks.sinaapp.com/repo/greatghoul/slides/google-oauth2-and-analytics-data-api/>
 
+CHANGELOG
+---------
+
+**2013-04-24 - 1.0**
+
+ * Play remark slides from gist or github repository.  
+ * Browser bookmarklet to play slides easily.
+ * Support using customized theme file for slides.
+ * Support github `client_id` to increase github api v3 call limititoin 
+ * Support branch when using github repository.
+ * Support google analytics.
+
 LICENCE
 -------
 
