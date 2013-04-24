@@ -65,6 +65,28 @@ Remarks add some additional attributes in remark source:
 in the first fieldset, `title` means the TITLE for slides.
 
 ---
+# Set slides theme
+
+Remarks will use **remark** official slide's stylesheet as default theme.
+
+If you want to use your own, add theme config in meta attributes:
+
+    title: Introduce Remarks
+    theme: my-theme.css
+    name: inverse
+    layout: true
+    class: inverse
+
+You can also use full url path under other domain.
+
+    theme: http://www.mydomain.com/static/mytheme.css
+
+Or, use a common theme in other directory.
+
+    theme: ../themes/my-theme.css
+
+Theme filename must be end with `.css`
+
 # Insert images host in github repo
 
 Images beside slides source in repo subfolders can be embedded easily.
