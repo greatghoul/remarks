@@ -3,19 +3,23 @@ from flask import Flask, abort, request, redirect, render_template, \
                   url_for, send_from_directory, Response
 from log import log
 import os
+import sys
 import re
 import base64
 import urlparse
 from github import GitHub, ApiError, ApiNotFoundError
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 instance_path = os.path.dirname(__file__)
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(instance_path, 'config.cfg'), silent=True)
-gh = GitHub(client_id=app.config['CLIENT_ID'], client_secret=app.config['CLIENT_SECRET'])
+
 
 @app.route('/')
 def home():
-    bookmarklet = render_template('bookmarklet.js').replace('\n', '');  
+    bookmarklet = render_template('bookmarklet.js').replace('\n', '');
     return render_template('index.html', bookmarklet=bookmarklet)
 
 
@@ -34,6 +38,48 @@ def _gist_slides(gist):
         slides[key] = val
     slides['content'] = content
     return slides
+
+
+def _local_slides(filename):
+    slides = dict(title=u'Remarks Slides', theme=url_for('theme', name='default', filename='style.css'))
+    file = open(filename)
+    content = []
+    while True:
+        lines = file.readlines(100000)
+        if not lines:
+            break
+        for line in lines:
+            content.append(line)
+    content = ''.join(content)
+    for line in re.sub(r'\s*^---.*$[\s\S]*', '', content, flags=re.M).split('\n'):
+        key, val = re.split(r':\s*', line, maxsplit=1)
+        slides[key] = val
+    slides['content'] = content
+    return slides
+
+
+@app.route('/show/', methods=['GET'])
+@app.route('/show/<filename>', methods=['GET'])
+def show_local(filename='slides.md'):
+    try:
+        filename = 'markdown/' + filename
+        log.info('Loading file: %s', filename)
+        slides = _local_slides(filename)
+        theme = request.args.get('theme', 'monokai')
+        highlight = request.args.get('highlight', 'remark')
+        return render_template('localshow.html',
+                               slides=slides,
+                               theme=theme,
+                               highlight=highlight)
+    except ApiNotFoundError, e:
+        log.error(e.response)
+    except ApiError, e:
+        log.error(e.response)
+    except Exception, e:
+        log.error(e)
+
+    return abort(404)
+
 
 @app.route('/gist/<gist_id>/', methods=['GET'])
 @app.route('/gist/<gist_id>/<filename>', methods=['GET'])
@@ -78,7 +124,7 @@ def _repo_slides(repo):
 
 def _repo_attach(owner, repo, branch, path, filename):
     return 'https://raw.github.com/%s/%s/%s/%s/%s' % (owner, repo, branch, path, filename)
-    
+
 @app.route('/repo/<owner>/<repo>/<path>/', methods=['GET'])
 @app.route('/repo/<owner>/<repo>/<path>/<path:filename>', methods=['GET'])
 def repo_file(owner, repo, path, filename='slides.md'):
@@ -118,3 +164,38 @@ def repo_file(owner, repo, path, filename='slides.md'):
 
     return abort(404)
 
+
+def _usage():
+    print '''
+%s [--run-local]
+
+--run-local example:
+http://127.0.0.1:5000/show/<filename.md>?theme=dark&highlight=ruby
+theme:
+    arta, ascetic, dark, default, far, github,
+    googlecode, idea, ir_black, magula, monokai,
+    rainbow, solarized_dark, solarized_light,
+    sunburst, tomorrow, tomorrow-night-blue,
+    tomorrow-night-bright, tomorrow-night,
+    tomorrow-night-eighties, vs, zenburn.
+
+highlight:
+    avascript, ruby, python, bash, java, php,
+    perl, cpp, objectivec, cs, sql, xml, css,
+    scala, coffeescript, lisp, clojure, http
+    ''' % sys.argv[0]
+    sys.exit(1)
+
+
+# TODO 目前只有一个参数，没有用opsparse解析
+arg_len = len(sys.argv)
+if arg_len == 1:
+    gh = GitHub(client_id=app.config['CLIENT_ID'], client_secret=app.config['CLIENT_SECRET'])
+elif arg_len == 2:
+    if sys.argv[1] == '--run-local':
+        log.info('Run local...')
+        app.run()
+    else:
+        _usage()
+else:
+    _usage()
