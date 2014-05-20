@@ -8,11 +8,13 @@ import re
 import base64
 import urlparse
 from github import GitHub, ApiError, ApiNotFoundError
+from os.path import realpath
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 instance_path = os.path.dirname(__file__)
+rpath = realpath(os.getcwd())
 app = Flask(__name__)
 app.config.from_pyfile(os.path.join(instance_path, 'config.cfg'), silent=True)
 
