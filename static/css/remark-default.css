@@ -1,9 +1,11 @@
-@import url(http://fonts.googleapis.com/css?family=Droid+Serif);
-@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+/*@import url(http://fonts.googleapis.com/css?family=Droid+Serif);*/
+/*@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);*/
 
-body { font-family: 'Droid Serif' }
+body { 
+/*font-family: 'Droid Serif' */
+}
 h1, h2, h3 {
-    font-family: 'Yanone Kaffeesatz';
+    /*font-family: 'Yanone Kaffeesatz';*/
     font-weight: 400;
     margin-bottom: 0;
 }
