@@ -1,21 +1,40 @@
 from unittest import TestCase
 
-from utils.github_utils import source_type, source_info
+from utils.github_utils import source_info
 
 class TestGithubUtils(TestCase):
+    def setUp(self):
+        self.gist_path = 'greatghoul/c2fab58e798a91a736a4'
+        self.repo_path = 'greatghoul/slides/remarks'
+        self.repov1_path = 'greatghoul/slides/remarks/v1'
+        self.invalid_paths = [
+            '/greatghoul/slides',
+            'gre atghoul/ slides',
+            '/greatghoul',
+            'greatghoul',
+        ]
 
-    def test_source_type(self):
-        self.assertEqual(source_type('greatghoul/slides/remarks'), 'repo')
-        self.assertEqual(source_type('greatghoul/slides/remarks/v1'), 'repo')
-        self.assertEqual(source_type('greatghoul/63732627262'), 'gist')
+    def test_extract_gist_info_from_path(self):
+        gist = source_info(self.gist_path)
+        self.assertEqual(gist['type'], 'gist')
+        self.assertEqual(gist['user'], 'greatghoul')
+        self.assertEqual(gist['gist'], 'c2fab58e798a91a736a4')
 
-    def test_get_repo_info_from_given_path(self):
-        repo = source_info('greatghoul/slides/remarks')
+    def test_extract_repo_info_from_path(self):
+        repo = source_info(self.repo_path)
+        self.assertEqual(repo['type'], 'repo')
         self.assertEqual(repo['user'], 'greatghoul')
         self.assertEqual(repo['repo'], 'slides')
         self.assertEqual(repo['path'], 'remarks')
 
-        repo = source_info('greatghoul/slides/remarks/v1')
+        repo = source_info(self.repov1_path)
+        self.assertEqual(repo['type'], 'repo')
         self.assertEqual(repo['user'], 'greatghoul')
         self.assertEqual(repo['repo'], 'slides')
         self.assertEqual(repo['path'], 'remarks/v1')
+
+    def test_invalid_source_type(self):
+        for path in self.invalid_paths:
+            source = source_info(path)
+            self.assertIsNone(source)
+
