@@ -1,0 +1,138 @@
+{
+  "url": "https://api.github.com/gists/ea4e72a819fe764efafc",
+  "forks_url": "https://api.github.com/gists/ea4e72a819fe764efafc/forks",
+  "commits_url": "https://api.github.com/gists/ea4e72a819fe764efafc/commits",
+  "id": "ea4e72a819fe764efafc",
+  "git_pull_url": "https://gist.github.com/ea4e72a819fe764efafc.git",
+  "git_push_url": "https://gist.github.com/ea4e72a819fe764efafc.git",
+  "html_url": "https://gist.github.com/ea4e72a819fe764efafc",
+  "files": {
+    "slide.md": {
+      "filename": "slide.md",
+      "type": "text/plain",
+      "language": "Markdown",
+      "raw_url": "https://gist.githubusercontent.com/greatghoul/ea4e72a819fe764efafc/raw/e32b7a313f2883e7b28f4bc4fad7c6ba35ec72c3/slide.md",
+      "size": 2541,
+      "truncated": false,
+      "content": "title: Introduce Remarks\nname: inverse\nlayout: true\nclass: inverse\n\n---\nclass: center middle\n\n# Remarks\nA simple remark slides player.\n\n---\n# What is remark\n\n**Remark** is a simple, in-browser, markdown-driven slideshow tool targeted at people who know their way around HTML and CSS, featuring:\n\n * Markdown formatting, with smart extensions\n * Automatic syntax highlighting, with optional language hinting\n * Slide scaling, thus similar appearance on all devices / resolutions\n * Touch support for smart phones and pads, i.e. swipe to navigate slides\n * Check out this remark slideshow for a brief introduction.\n\nCheck out [this remark slideshow][^1] for a brief introduction.\nCheck out <https://github.com/gnab/remark> for more details.\n\n[^1]: http://gnab.github.com/remark\n\n---\n# What is remarks\n\n**Remarks** is a web application that making and playing remark slides online, featuring:\n\n * Play remark slides online from gist or github repositories\n * Bookmarklet to play slides easily\n * Bookmarklet to preview slides in a popup window.\n\n---\n# Remarks in gist\n\n![Remarks in gist](gist.png)\n\n.footnote[[View sample][^1]]\n\n[^1]: https://gist.github.com/greatghoul/5123482\n\n---\n# Remarks in repo\n\n![Remarks in repo](repo.png)\n\n.footnote[[View sample][^1]]\n\n[^1]: https://github.com/greatghoul/slides/tree/master/google-oauth2-and-analytics-data-api\n\n---\n# Set slides title\n\nRemarks add some additional attributes in remark source:\n\n    title: Introduce Remarks\n    name: inverse\n    layout: true\n    class: inverse\n\nin the first fieldset, `title` means the TITLE for slides.\n\n---\n# Set slides theme\n\nRemarks will use **remark** official slide's stylesheet as default theme.\n\nIf you want to use your own, add theme config in meta attributes:\n\n    title: Introduce Remarks\n    theme: my-theme.css\n    name: inverse\n    layout: true\n    class: inverse\n\nYou can also use full url path under other domain.\n\n    theme: http://www.mydomain.com/static/mytheme.css\n\nOr, use a common theme in other directory.\n\n    theme: ../themes/my-theme.css\n\nTheme filename must be end with `.css`\n\n---\n# Insert images host in github repo\n\nImages beside slides source in repo subfolders can be embedded easily.\n\n    /repo/path\n      /slides-folder\n        /slides.md\n        /picture1.png\n        /picture2.png\n\n`slides.md`\n\n    ![picture1](picture1.png)\n    ![picture2](picture2.png)\n---\nname: last-page\ntemplate: inverse\n\n## That's all folks (for now)!\n\nSlideshow created using [remark](http://github.com/gnab/remark) and [remarks](http://remarks.sinaapp.com)\n"
+    }
+  },
+  "public": true,
+  "created_at": "2014-11-21T10:10:42Z",
+  "updated_at": "2014-12-02T04:42:16Z",
+  "description": "Test remarkjs https://github.com/gnab/remark",
+  "comments": 0,
+  "user": null,
+  "comments_url": "https://api.github.com/gists/ea4e72a819fe764efafc/comments",
+  "owner": {
+    "login": "greatghoul",
+    "id": 208966,
+    "avatar_url": "https://avatars.githubusercontent.com/u/208966?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/greatghoul",
+    "html_url": "https://github.com/greatghoul",
+    "followers_url": "https://api.github.com/users/greatghoul/followers",
+    "following_url": "https://api.github.com/users/greatghoul/following{/other_user}",
+    "gists_url": "https://api.github.com/users/greatghoul/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/greatghoul/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/greatghoul/subscriptions",
+    "organizations_url": "https://api.github.com/users/greatghoul/orgs",
+    "repos_url": "https://api.github.com/users/greatghoul/repos",
+    "events_url": "https://api.github.com/users/greatghoul/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/greatghoul/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "forks": [
+
+  ],
+  "history": [
+    {
+      "user": {
+        "login": "greatghoul",
+        "id": 208966,
+        "avatar_url": "https://avatars.githubusercontent.com/u/208966?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/greatghoul",
+        "html_url": "https://github.com/greatghoul",
+        "followers_url": "https://api.github.com/users/greatghoul/followers",
+        "following_url": "https://api.github.com/users/greatghoul/following{/other_user}",
+        "gists_url": "https://api.github.com/users/greatghoul/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/greatghoul/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/greatghoul/subscriptions",
+        "organizations_url": "https://api.github.com/users/greatghoul/orgs",
+        "repos_url": "https://api.github.com/users/greatghoul/repos",
+        "events_url": "https://api.github.com/users/greatghoul/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/greatghoul/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "version": "4da08f8e454698e70148c8e798386718e37e4b5b",
+      "committed_at": "2014-12-02T04:42:16Z",
+      "change_status": {
+        "total": 110,
+        "additions": 102,
+        "deletions": 8
+      },
+      "url": "https://api.github.com/gists/ea4e72a819fe764efafc/4da08f8e454698e70148c8e798386718e37e4b5b"
+    },
+    {
+      "user": {
+        "login": "greatghoul",
+        "id": 208966,
+        "avatar_url": "https://avatars.githubusercontent.com/u/208966?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/greatghoul",
+        "html_url": "https://github.com/greatghoul",
+        "followers_url": "https://api.github.com/users/greatghoul/followers",
+        "following_url": "https://api.github.com/users/greatghoul/following{/other_user}",
+        "gists_url": "https://api.github.com/users/greatghoul/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/greatghoul/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/greatghoul/subscriptions",
+        "organizations_url": "https://api.github.com/users/greatghoul/orgs",
+        "repos_url": "https://api.github.com/users/greatghoul/repos",
+        "events_url": "https://api.github.com/users/greatghoul/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/greatghoul/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "version": "47dc0df4361c2747a48f782d60e277a59cba5e98",
+      "committed_at": "2014-11-21T10:14:05Z",
+      "change_status": {
+        "total": 2,
+        "additions": 2,
+        "deletions": 0
+      },
+      "url": "https://api.github.com/gists/ea4e72a819fe764efafc/47dc0df4361c2747a48f782d60e277a59cba5e98"
+    },
+    {
+      "user": {
+        "login": "greatghoul",
+        "id": 208966,
+        "avatar_url": "https://avatars.githubusercontent.com/u/208966?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/greatghoul",
+        "html_url": "https://github.com/greatghoul",
+        "followers_url": "https://api.github.com/users/greatghoul/followers",
+        "following_url": "https://api.github.com/users/greatghoul/following{/other_user}",
+        "gists_url": "https://api.github.com/users/greatghoul/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/greatghoul/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/greatghoul/subscriptions",
+        "organizations_url": "https://api.github.com/users/greatghoul/orgs",
+        "repos_url": "https://api.github.com/users/greatghoul/repos",
+        "events_url": "https://api.github.com/users/greatghoul/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/greatghoul/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "version": "6136df00424e5b28b518d93b1ebb6b3db3bb09c0",
+      "committed_at": "2014-11-21T10:10:42Z",
+      "change_status": {
+        "total": 15,
+        "additions": 15,
+        "deletions": 0
+      },
+      "url": "https://api.github.com/gists/ea4e72a819fe764efafc/6136df00424e5b28b518d93b1ebb6b3db3bb09c0"
+    }
+  ]
+}

@@ -1,8 +1,7 @@
 from unittest import TestCase
+from helpers.slide_helper import source_info, slide_meta
 
-from utils.github_utils import source_info
-
-class TestGithubUtils(TestCase):
+class TestSlideHelper(TestCase):
     def setUp(self):
         self.gist_path = 'greatghoul/c2fab58e798a91a736a4'
         self.repo_path = 'greatghoul/slides/remarks'
@@ -38,3 +37,7 @@ class TestGithubUtils(TestCase):
             source = source_info(path)
             self.assertIsNone(source)
 
+    def test_slide_meta(self):
+        content = open('tests/fixtures/gist/slide.md').read()
+        meta = slide_meta(content)
+        self.assertEqual(meta['title'], 'Introduce Remarks')
