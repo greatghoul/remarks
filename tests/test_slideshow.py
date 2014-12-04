@@ -7,7 +7,7 @@ from helpers.slide_helper import source_info
 MOCKS = {
     'gist': {
         'url': 'https://api.github.com/gists/ea4e72a819fe764efafc',
-        'file': 'tests/fixtures/gist/response.json',
+        'file': 'tests/fixtures/gist.json',
     },
 }
 
@@ -31,14 +31,14 @@ class TestSlideshow(TestCase):
 
         info = source_info('greatghoul/ea4e72a819fe764efafc')
         slide = Slideshow.load(info)
-        self.assertEqual(slide.source, open('tests/fixtures/gist/slide.md').read())
+        self.assertEqual(slide.source, open('tests/fixtures/slide.md').read())
         self.assertEqual(slide.title, 'Introduce Remarks')
-        #repo_slides = Slideshow('greatghoul/slides/remarks')
 
 
     def test_load_repo_source(self):
-        """
-        Fetch slide source code from repo directory url
-        """
+        self.mock('repo')
 
-        self.fail('not implemented')
+        info = source_info('greatghoul/slides/remarks')
+        slide = Slideshow.load(info)
+        self.assertEqual(slide.soruce, open('tests/fixtures/slide.md'))
+        self.assertEqual(slide.title, 'Introduce Remarks')
