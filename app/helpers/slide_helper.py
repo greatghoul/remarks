@@ -4,8 +4,8 @@ import urllib2
 import urlparse
 
 SOURCE_PATTERNS = {
-    'repo': r'(?P<user>[^\/\s]+)\/(?P<repo>[^\/\s]+)\/(?P<path>\S+)',
-    'gist': r'(?P<user>[^\/\s]+)\/(?P<gist>[^\/\s]+)'
+    'repo': r'(?P<user>[^\/\s]+)\/(?P<path>\S+)',
+    'gist': r'(?P<gist>[0-9A-Za-z]{20})'
 }
 
 def source_info(path):
@@ -15,7 +15,10 @@ def source_info(path):
     for source_type, path_pattern in SOURCE_PATTERNS.items():
         match = re.match(path_pattern, path)
         if match:
-            return dict(match.groupdict(), type=source_type)
+            info = dict(match.groupdict(), type=source_type)
+            if source_type == 'repo':
+                info['repo'] = 'slides'
+            return info
 
     return None
 
