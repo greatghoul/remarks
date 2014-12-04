@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-{% set intro_url = url_for('repo_file', owner='greatghoul', repo='remarks', path='intro', branch='devel') %}
+{% set intro_url = url_for('slideshow', path='greatghoul/remarks') %}
 <iframe id="slides" frameborder="0" src="{{ intro_url }}"></iframe>
 <a href="{{ intro_url }}" target="_blank" title="Open in new wndow."><i class="icon-share"></i> Open in new window.</a>
 {% endblock %}

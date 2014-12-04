@@ -7,3 +7,7 @@ def test():
 @task
 def install():
     run('sudo pip install -r requirements.txt')
+
+@task
+def server():
+    run('dev_server.py')
