@@ -1,9 +1,8 @@
 import sys
 root = os.path.dirname(__file__)
-sys.path.insert(0, os.path.join(root, 'site-packages'))
+sys.path.insert(0, os.path.join(root, 'lib'))
 
 import sae
-
-from main import app
+from remarks import app
 
 application = sae.create_wsgi_app(app)

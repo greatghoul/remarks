@@ -1,8 +1,8 @@
 import httpretty
 
 from unittest import TestCase
-from models import Slideshow
-from helpers.slide_helper import source_info
+from remarks.models import Slideshow
+from remarks.helpers.slide_helper import source_info
 
 MOCKS = {
     'gist': {

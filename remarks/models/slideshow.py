@@ -1,7 +1,7 @@
 import base64
 from urllib import urlopen
 from github import GitHub
-from helpers.slide_helper import slide_meta
+from remarks.helpers.slide_helper import slide_meta
 
 class Slideshow():
     def __init__(self, source_info):

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from helpers.slide_helper import source_info, slide_meta
+from remarks.helpers.slide_helper import source_info, slide_meta
 
 class TestSlideHelper(TestCase):
     def test_extract_gist_info_from_path(self):
