@@ -38,6 +38,6 @@ class TestSlideHelper(TestCase):
             self.assertIsNone(source)
 
     def test_slide_meta(self):
-        content = open('tests/fixtures/gist/slide.md').read()
+        content = open('tests/fixtures/slide.md').read()
         meta = slide_meta(content)
         self.assertEqual(meta['title'], 'Introduce Remarks')

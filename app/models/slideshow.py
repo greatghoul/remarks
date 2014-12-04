@@ -1,11 +1,12 @@
+import base64
 from urllib import urlopen
-from pygithub3 import Github
+from github import GitHub
 from helpers.slide_helper import slide_meta
 
 class Slideshow():
     def __init__(self, source_info):
         self.source_info = source_info
-        self.api = Github()
+        self.api = GitHub()
 
     @classmethod
     def load(cls, source_info):
@@ -24,19 +25,19 @@ class Slideshow():
 
 class GistSlideshow(Slideshow):
     def load(self):
-        # self.gist = self.api.gists(self.source_info['gist']).get()
-        self.gist = self.api.gists.get('ea4e72a819fe764efafc')
+        self.gist = self.api.gists(self.source_info['gist']).get()
         return self
 
     @property
     def source(self):
-        return self.gist.files.get('slide.md').content
+        return self.gist.get('files', {}).get('slide.md', {}).get('content', '')
         
 
 class RepoSlideshow(Slideshow):
     def load(self):
+        self.repo = self.api.repos(self.source_info['user'])(self.source_info['repo']).contents('%s/slide.md' % self.source_info['path']).get()
         return self
 
     @property
     def source(self):
-        return ""
+        return base64.b64decode(self.repo.get('content', '')).decode('utf-8')

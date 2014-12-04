@@ -9,6 +9,10 @@ MOCKS = {
         'url': 'https://api.github.com/gists/ea4e72a819fe764efafc',
         'file': 'tests/fixtures/gist.json',
     },
+    'repo': {
+        'url': 'https://api.github.com/repos/greatghoul/slides/contents/remarks/slide.md',
+        'file': 'tests/fixtures/repo.json',
+    },
 }
 
 class TestSlideshow(TestCase):
@@ -16,15 +20,13 @@ class TestSlideshow(TestCase):
     def mock(self, name):
         info = MOCKS[name]
         body = open(info['file']).read()
-        httpretty.register_uri(httpretty.GET, info['url'], body=body)
+        httpretty.register_uri(httpretty.GET, info['url'], body=body, content_type='application/json')
 
     def setUp(self):
         httpretty.enable()
-        #pass
 
     def tearDown(self):
         httpretty.disable()
-        #pass
 
     def test_load_gist_source(self):
         self.mock('gist')
@@ -40,5 +42,5 @@ class TestSlideshow(TestCase):
 
         info = source_info('greatghoul/slides/remarks')
         slide = Slideshow.load(info)
-        self.assertEqual(slide.soruce, open('tests/fixtures/slide.md'))
+        self.assertEqual(slide.source, open('tests/fixtures/slide.md').read())
         self.assertEqual(slide.title, 'Introduce Remarks')
