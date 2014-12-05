@@ -1,0 +1,98 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+
+body { 
+    font-family: 'Ubuntu';
+    font-weight: 400;
+}
+h1, h2, h3 {
+    font-family: 'Yanone Kaffeesatz';
+    font-weight: 400;
+    margin: 5px;
+}
+h1 { font-size: 4em; }
+h2 { font-size: 2.3em; }
+h3 { font-size: 1.6em; }
+body { font-size: 1.5em; }
+
+.remark-slide-content {
+  background-image: url(gdg-xian-small.png);
+  background-position: 99% 1% !important;
+  background-size: 20%;
+}
+
+.slide .content {
+    padding: 10px 90px !important;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#slideshow .no-highlight {
+    font-size: 1em !important;
+}
+
+blockquote {
+    font-style: italic;
+    margin: 0.25em 0;
+    padding: 0.25em 40px;
+    line-height: 1.45;
+    position: relative;
+}
+
+blockquote:before {
+    opacity: 0.8;
+    display: block;
+    content: "\201C";
+    font-size: 3em;
+    position: absolute;
+    left: -20px;
+    top: -20px;
+}
+
+blockquote cite {
+    opacity: 0.8;
+    font-size: 1em;
+    display: block;
+    margin-top: 5px;
+}
+
+blockquote cite:before {
+    content: "\2014 \2009";
+}
+
+/* Two-column layout */
+.left-column {
+    width: 50%;
+    float: left;
+}
+.right-column {
+    width: 50%;
+    float: right;
+}
+
+code {
+    -moz-border-radius: 5px;
+    -web-border-radius: 5px;
+    background: #e7e8e2;
+    border-radius: 5px;
+}
+
+.inverse {
+    background: #A60A17;
+}
+
+/* slides */
+
+.bg-red {
+    background: #A60A17;
+}
+.bg-dark {
+    color: white;
+    text-shadow: 0 0 20px #333;
+}
+.bg-matz {
+    background-image:url(images/matz.jpeg);
+}
