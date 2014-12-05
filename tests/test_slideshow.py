@@ -2,7 +2,6 @@ import httpretty
 
 from unittest import TestCase
 from remarks.models import Slideshow
-from remarks.helpers.slide_helper import source_info
 
 MOCKS = {
     'gist': {
@@ -31,8 +30,7 @@ class TestSlideshow(TestCase):
     def test_load_gist_source(self):
         self.mock('gist')
 
-        info = source_info('ea4e72a819fe764efafc')
-        slide = Slideshow.load(info)
+        slide = Slideshow.gist('ea4e72a819fe764efafc')
         self.assertEqual(slide.source, open('tests/fixtures/slide.md').read())
         self.assertEqual(slide.title, 'Introduce Remarks')
 
@@ -40,7 +38,6 @@ class TestSlideshow(TestCase):
     def test_load_repo_source(self):
         self.mock('repo')
 
-        info = source_info('greatghoul/remarks')
-        slide = Slideshow.load(info)
+        slide = Slideshow.repo('greatghoul', 'remarks')
         self.assertEqual(slide.source, open('tests/fixtures/slide.md').read())
         self.assertEqual(slide.title, 'Introduce Remarks')

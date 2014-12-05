@@ -3,7 +3,9 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>{{ slide.title }}</title>
-<link rel="stylesheet" type="text/css" href="{{ slide.meta['theme'] }}" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="{{ theme_url(slide.meta.get('theme', 'default')) }}" media="screen" />
+
 </head>
 <body>
 <textarea id="source" style="display: none;">{{ slide.source }}</textarea>

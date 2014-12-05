@@ -1,48 +1,77 @@
 # coding: utf-8
 from flask import Flask, abort, request, redirect, render_template, \
                   url_for, send_from_directory, Response
-from log import log
 import os
 import sys
 import re
 import base64
 import urlparse
-from remarks.helpers.slide_helper import source_info
+from werkzeug.routing import BaseConverter
 from remarks.models import Slideshow
 from remarks.logger import logger
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/_static')
 
-root = os.path.dirname(os.path.dirname(__file__))
-app.config.from_pyfile(os.path.join(root, 'config.cfg'), silent=True)
+root = os.path.dirname(__file__)
+config = os.path.join(os.path.dirname(root), 'config.cfg')
+app.config.from_pyfile(config, silent=True)
+
+def theme_url(theme):
+    if theme in ['default', 'dark', 'gdg']:
+        filename = 'themes/%s/style.css' % theme
+        return url_for('static', filename=filename)
+    else:
+        return theme
+
+app.jinja_env.globals['theme_url'] = theme_url
+
+class PubConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(PubConverter, self).__init__(url_map)
+        self.regex = r'[^_][^\/]*'
+
+app.url_map.converters['pub'] = PubConverter
 
 @app.route('/')
 def home():
     bookmarklet = render_template('bookmarklet.js').replace('\n', '');
     return render_template('index.html', bookmarklet=bookmarklet)
 
-@app.route('/favicon.ico')
-def favicon():
-    return app.send_static_file(os.path.join(root, 'remarks', 'favicon.ico'))
-
 @app.route('/theme/<name>/<path:filename>')
 def theme(name, filename):
     theme_dir = os.path.join(instance_path, 'themes', name)
-    log.info('Theme file: %s/%s', theme_dir, filename)
+    logger.info('Theme file: %s/%s', theme_dir, filename)
     return send_from_directory(theme_dir, filename)
 
-@app.route('/<path:path>', methods=['GET'])
-@app.route('/<path:path>/', methods=['GET'])
-def slideshow(path):
-    if request.referrer:
-        refer = urlparse.urlparse(request.referrer)
-        logger.info('%s -> %s', refer.path, path)
+def _render_asset(slide, filename):
+    name = filename.lower()
+    if name.endswith('.css'):
+        content = slide.file_content(filename)
+        return Response(content, mimetype='text/css')
+    elif name.endswith('.js'):
+        content = slide.file_content(filename)
+        return Response(content, mimetype='text/javascript')
+    else:
+        return redirect(slide.file_url(filename))
 
-    logger.info('%s -> %s', path, request.referrer)
-    info = source_info(path)
-    slide = Slideshow.load(info)
-    return render_template('slideshow.html', slide=slide)
-    
+def _render_slide(slide, filename):
+    if filename:
+        return _render_asset(slide, filename)
+    else:
+        return render_template('slideshow.html', slide=slide)
 
-def _repo_attach(owner, repo, branch, path, filename):
-    return 'https://raw.github.com/%s/%s/%s/%s/%s' % (owner, repo, branch, path, filename)
+@app.route('/gist/<gist_id>/', methods=['GET'])
+@app.route('/gist/<gist_id>/<filename>', methods=['GET'])
+def gist(gist_id, filename=None):
+    slide = Slideshow.gist(gist_id)
+    return _render_slide(slide, filename)
+
+@app.route('/<pub:user>/<slug>/', methods=['GET'])
+@app.route('/<pub:user>/<slug>/<path:filename>', methods=['GET'])
+def repo(user, slug, filename=None):
+    slide = Slideshow.repo(user, slug)
+    return _render_slide(slide, filename)
+
+
+def _repo_asset(user, slug, filename):
+    return 'https://raw.github.com/%s/%s/%s/%s/%s' % (user, 'slides', 'master', slug, filename)
