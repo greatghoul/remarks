@@ -108,7 +108,7 @@ Regular Markdown rules apply with only a single exception:
   - A line containing three dashes constitutes a new slide
   (not a horizontal rule, `&lt;hr /&gt;`)
 
-Have a look at the [Markdown website](http://daringfireball.net/projects/markdown/) if you're not familiar with Markdown formatting.
+Have a look at the [Markdown website](https://daringfireball.net/projects/markdown/) if you're not familiar with Markdown formatting.
 ]
 ---
 .left-column[
@@ -135,7 +135,7 @@ A simple HTML document is needed for hosting the styles, Markdown and the genera
       </body>
     </html>
 
-You may download [`.no-highlight remark.js`](http://gnab.github.com/remark/downloads/remark-0.4.6.min.js) to have your slideshow not depend on any online resources, or reference the latest version online directly.
+You may download [`.no-highlight remark.js`](https://gnab.github.com/remark/downloads/remark-0.4.6.min.js) to have your slideshow not depend on any online resources, or reference the latest version online directly.
 ]
 ---
 template: inverse
@@ -207,7 +207,7 @@ Resulting HTML extract:
 .right-column[
 Code blocks are automatically syntax highlighted, based on the number of recognized keywords from a set of [supported languages](https://github.com/gnab/remark/wiki/Configuration-Options#wiki-highlighting).
 
-Both indented code blocks and [GFM](http://github.github.com/github-flavored-markdown/) fenced code blocks are supported, optionally overriding the automatically detected language:
+Both indented code blocks and [GFM](https://github.github.com/github-flavored-markdown/) fenced code blocks are supported, optionally overriding the automatically detected language:
 
 .pull-left[
 
@@ -408,7 +408,7 @@ template: inverse
 .right-column[
 Getting up and running is done in only a few steps:
 
-1. Visit the [project site](http://github.com/gnab/remark)
+1. Visit the [project site](https://github.com/gnab/remark)
 
 2. Follow the steps in the Usage section
 
@@ -421,4 +421,4 @@ template: inverse
 
 ## That's all folks (for now)!
 
-Slideshow created using [remark](http://github.com/gnab/remark).
+Slideshow created using [remark](https://github.com/gnab/remark).

@@ -23,7 +23,7 @@ A simple remark slides player.
 Check out [this remark slideshow][^1] for a brief introduction.
 Check out <https://github.com/gnab/remark> for more details.
 
-[^1]: http://gnab.github.com/remark
+[^1]: https://gnab.github.com/remark
 
 ---
 # What is remarks
@@ -108,4 +108,4 @@ template: inverse
 
 ## That's all folks (for now)!
 
-Slideshow created using [remark](http://github.com/gnab/remark) and [remarks](http://remarks.sinaapp.com)
+Slideshow created using [remark](https://github.com/gnab/remark) and [remarks](https://remarks.sinaapp.com)
